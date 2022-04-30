@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une histoire{% endblock %}
+
+{% block body %}
+<div class="container">
+
+    <h3 class="text-center mt-3">Merci à vous de partager cette histoire !</h3>
+    <p class="text-muted"><i>Merci de rester respectueux dans votre langage comme dans vos propos</i></p>
+    <form method="post" id="stories">
+        <div class="col-4">
+            <label for="stories_title" class="form-label">Le titre de l'histoire</label>
+            <input type="text" id="stories_title" name="title" maxlength="255" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="stories_description" class="form-label required">Le contenu de votre histoire</label>
+            <textarea id="stories_description" name="description" required="required" class="form-control"></textarea>
+        </div>
+        <legend class="col-form-label required">Choisissez les catégories associées</legend>
+        <select id="stories_tags" name="tagsChoosed" required="required" class="form-select" multiple="multiple">
+            {% for tag in tags %}
+                <option value="{{ tag.id }}">{{ tag.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" class="btn btn-light" id="add_story" value="Soumettre mon histoire !">
+    </form>
+</div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset("/assets/js/addStory.js") }}"></script>
+{% endblock %}
