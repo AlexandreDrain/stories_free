@@ -35,13 +35,11 @@ class ApiPostController extends AbstractController
 
         $user = $this->getUser();
 
-        // if ($user) {
+        if ($user) {
             try {
 
                 $json = $request->getContent();
-                dd($json);
                 $story = $serializer->deserialize($json, Stories::class, 'json');
-                dd($story);
         
                 $story->setLiked(0);
                 $story->setDisliked(0);
@@ -49,7 +47,8 @@ class ApiPostController extends AbstractController
                 $story->setUser($user);
                 dd($story);
     
-                $entityManager->persist($story)->flush();
+                $entityManager->persist($story);
+                $entityManager->flush();
     
                 /*
                     Retour json, cette méthode va serialiser les données retournées par findAll,
@@ -62,9 +61,9 @@ class ApiPostController extends AbstractController
                     "message" => "Syntax error"
                 ]);
             }
-        // } else {
-        //     // Retourne une JsonResponse dans le cas où l'utilisateur n'est pas connecté
-        //     return new JsonResponse(['success' => false, 'message' => "Vous devez vous connecter pour pouvoir ajouter une histoire"]);
-        // }
+        } else {
+            // Retourne une JsonResponse dans le cas où l'utilisateur n'est pas connecté
+            return new JsonResponse(['success' => false, 'message' => "Vous devez vous connecter pour pouvoir ajouter une histoire"]);
+        }
     }
 }
