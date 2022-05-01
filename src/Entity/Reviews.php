@@ -4,43 +4,53 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ReviewsRepository;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity(repositoryClass=ReviewsRepository::class)
  */
+//  * @ApiResource(
+//  *    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'reviews:list']]],
+//  *    itemOperations: ['get' => ['normalization_context' => ['groups' => 'reviews:item']]],
+//  *    paginationEnabled: false,
+//  * )
+//  * @ApiFilter(SearchFilter::class, properties: ['stories' => 'exact'])
 class Reviews
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("post:read")
+     * @Groups("post:read", "reviews:list", "reviews:item")
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups("post:read")
+     * @Groups("post:read", "reviews:list", "reviews:item")
      */
     private $description;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups("post:read")
+     * @Groups("post:read", "reviews:list", "reviews:item")
      */
     private $liked;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups("post:read")
+     * @Groups("post:read", "reviews:list", "reviews:item")
      */
     private $disliked;
 
     /**
      * @ORM\ManyToOne(targetEntity=Stories::class, inversedBy="reviews")
+     * @Groups("post:read", "reviews:list", "reviews:item")
      */
     private $story;
 
@@ -56,6 +66,7 @@ class Reviews
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups("post:read", "reviews:list", "reviews:item")
      */
     private $createdAt;
 

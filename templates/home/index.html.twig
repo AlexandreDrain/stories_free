@@ -24,7 +24,11 @@
                 </h5>
                 <div class="card-body">
                     <h5 class="card-title">{{ story.title }}</h5>
-                    <p class="card-text">{{ story.description|slice(0, 300) }}{{ story.description|length > 300 ? "... <i><a href='#' title='Lien vers la page de l\'histoire'>Show more</a></i>" : "" }}</p>
+                    {% set detailLink = "" %}
+                    <p class="card-text">{{ story.description|slice(0, 300) }}
+                    {% if story.description|length > 300 %}
+                        <i><a href="{{ path('app_story', {id: story.id}) }}" title="Lien vers la page de l\'histoire">Show more</a></i>
+                    {% endif %}
                     <!-- a href="#" class="btn btn-outline-info btn-sm">Répondre</a> -->
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="evaluation" id="{{ "evaluation-" ~ story.id }}">

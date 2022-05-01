@@ -12,3 +12,6 @@ Pour initialiser le projet il est nécessaire d'executer quelques **commandes** 
   
 Penser à créer un fichier **'.env.local'** pour surcharger les variables d'environnement, et pour sécuriser les données sensibles (ce fichier n'étant pas versionné).  
 Pour lancer l'app il suffit de se mettre à la racine du projet et d'executer cette commande (ex :) **'php -S 127.0.0.1:8000 -t public'** ou bien de créer un virtualhost via WAMP par exemple.
+
+Il existe deux méthodes dans la classe 'ApiPostController' permettant de récupérer des histoires et d'en ajouter, en symfony classique.
+Pour accéder aux routes d'ApiPlatform il faut aller sur l'url "/apip" comme spécifié dans le fichier 'api_plaftform.yaml'.

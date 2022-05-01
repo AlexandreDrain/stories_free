@@ -71,6 +71,7 @@
                             <p class="card-text"><small class="text-muted"><i>{{ story.liked }} personnes ont aimés cette histoire</i></small></p>
                         </div>
                     </div>
+                    <i><a href="{{ path('app_story', {id: story.id}) }}" title="Lien vers la page de l\'histoire">Show more</a></i>
                 </div>
             </div>
             <div class="accordion col-6" id="accordionExample{{ story.id }}">

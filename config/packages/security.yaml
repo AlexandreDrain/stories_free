@@ -24,7 +24,7 @@ security:
                 # target: app_any_route
 
             login_link:
-                check_route: login_check
+                check_route: app_login_check
                 signature_properties: ['id']
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

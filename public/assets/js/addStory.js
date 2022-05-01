@@ -19,7 +19,11 @@ document.addEventListener("DOMContentLoaded", () => {
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
             }
-        }).then ((result) => console.log(result));
+        }).then( response => response.json() ).then( response => {
+            if (response.success == false) {
+                alert(response.message);
+            }
+        });
     });
 
     // https://stackoverflow.com/questions/11821261/how-to-get-all-selected-values-from-select-multiple-multiple

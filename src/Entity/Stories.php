@@ -2,14 +2,28 @@
 
 namespace App\Entity;
 
+use App\Entity\Tags;
+use App\Entity\Users;
+use App\Entity\Reviews;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\StoriesRepository;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+// * @ApiResource(
+//     *    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'stories:list']]],
+//     *    itemOperations: ['get' => ['normalization_context' => ['groups' => 'stories:item']]],
+//     *    order: ['liked' => 'DESC'],
+//     *    paginationEnabled: false,
+//     * )
+//  =>
+// Couldn't find constant collectionOperations, class App\Entity\Stories.
+
 /**
  * @ORM\Entity(repositoryClass=StoriesRepository::class)
+ * @ApiResource
  */
 class Stories
 {
@@ -17,31 +31,31 @@ class Stories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("post:read")
+     * @Groups("post:read", "stories:list", "stories:item")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups("post:read")
+     * @Groups("post:read", "stories:list", "stories:item")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups("post:read")
+     * @Groups("post:read", "stories:list", "stories:item")
      */
     private $description;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups("post:read")
+     * @Groups("post:read", "stories:list", "stories:item")
      */
     private $liked;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups("post:read")
+     * @Groups("post:read", "stories:list", "stories:item")
      */
     private $disliked;
 
@@ -65,19 +79,17 @@ class Stories
 
     /**
      * @ORM\ManyToMany(targetEntity=Users::class, mappedBy="stories_liked")
-     * @Groups("post:read")
      */
     private $users_who_liked;
 
     /**
      * @ORM\Column(type="datetime_immutable")
-     * @Groups("post:read")
+     * @Groups("post:read", "stories:list", "stories:item")
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
-     * @Groups("post:read")
      */
     private $updatedAt;
 

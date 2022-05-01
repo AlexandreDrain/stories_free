@@ -4,26 +4,35 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TagsRepository;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity(repositoryClass=TagsRepository::class)
  */
+//  * @ApiResource(
+//  *    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'tags:list']]],
+//  *    itemOperations: ['get' => ['normalization_context' => ['groups' => 'tags:item']]],
+//  *    paginationEnabled: false,
+//  * )
+//  * @ApiFilter(SearchFilter::class, properties: ['stories' => 'exact'])
 class Tags
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("post:read")
+     * @Groups("post:read", "tags:list", "tags:item")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups("post:read")
+     * @Groups("post:read", "tags:list", "tags:item")
      */
     private $name;
 

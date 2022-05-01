@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Reviews;
+use App\Entity\Stories;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UsersRepository;
 use Doctrine\Common\Collections\Collection;
@@ -9,35 +11,42 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity(repositoryClass=UsersRepository::class)
  */
+//  * @ApiResource(
+//  *    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'users:list']]],
+//  *    itemOperations: ['get' => ['normalization_context' => ['groups' => 'users:item']]],
+//  *    paginationEnabled: false,
+//  * )
+//  * @ApiFilter(SearchFilter::class, properties: ['stories' => 'exact'])
 class Users implements UserInterface
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("post:read")
+     * @Groups("post:read", "users:list", "users:item")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups("post:read")
+     * @Groups("post:read", "users:list", "users:item")
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups("post:read")
+     * @Groups("post:read", "users:list", "users:item")
      */
     private $roles = [];
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("post:read")
+     * @Groups("post:read", "users:list", "users:item")
      */
     private $pseudo;
 
@@ -48,7 +57,7 @@ class Users implements UserInterface
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups("post:read")
+     * @Groups("post:read", "users:list", "users:item")
      */
     private $aboutUser;
 

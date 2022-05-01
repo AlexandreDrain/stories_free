@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class StoriesController extends AbstractController
 {
     /**
-     * @Route("/stories", name="app_stories")
+     * @Route("/histoires", name="app_stories")
      */
     public function index(StoriesRepository $storiesRepository): Response
     {
@@ -29,13 +29,23 @@ class StoriesController extends AbstractController
      */
     public function add(Request $request, TagsRepository $tagsRepository): Response
     {
-        // Création du formulaire basé sur la classe StoriesUser
-        $user = new Stories();
-        $form = $this->createForm(StoriesType::class, $user);
+        // Création du formulaire basé sur la classe Stories
+        $story = new Stories();
+        $form = $this->createForm(StoriesType::class, $story);
 
         return $this->render('stories/add.html.twig',[
             'form' => $form->createView(),
             'tags' => $tagsRepository->findAll()
+        ]);
+    }
+
+    /**
+     * @Route("/histoire/{id}", name="app_story")
+     */
+    public function show(Stories $story): Response
+    {
+        return $this->render('stories/show.html.twig',[
+            'story' => $story,
         ]);
     }
 }
